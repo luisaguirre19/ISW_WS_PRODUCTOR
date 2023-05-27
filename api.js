@@ -40,7 +40,8 @@ try {
                             res.json([{"token":result,"resp":"Si", "id_login":result[0].id_login}]);    
                         })
                     }else{
-                        res.status(300).send("Verfica los datos ingresados");
+                        res.json([{"resp":"No"}])
+                        //res.status(300).send("Verfica los datos ingresados");
                     }
                 }
             })
@@ -85,6 +86,50 @@ try {
                 "sub_operacion":'V',
                 "correo":request.query.correo,
                 "pass":request.query.pass,
+                "sp":"principal_productor"
+            }]
+            dbocategoria.getData(parametros).then(result => {
+                if(result == 1){
+                    res.status(500).send("Revisa la parametrización enviada a la base de datos.");
+                }else{
+                    if(result[0].resp == "Si"){
+                        security.creaToken(result[0].usuario, result[0].id_login).then((result)=>{
+                            res.json(result);    
+                        })
+                    }else{
+                        res.status(300).send("Las credenciales no coinciden.");
+                    }   
+                }
+            })
+        } catch (error) {
+            res.status(100).send("Revisa la estructura de la parametrización.");
+        }
+    })
+
+    router.route('/login').post((request,res)=>{
+        try {
+            parametros = [{
+                "operacion":'L',
+                "sub_operacion":'U',
+                "correo":request.body.correo,
+                "sp":"principal_productor"
+            }]
+            dbocategoria.getData(parametros).then(result => {
+                            res.json(result);    
+            })
+     
+        } catch (error) {
+            res.status(100).send("Revisa la estructura de la parametrización.");
+        }
+    })
+
+    router.route('/incripcion').post((request,res)=>{
+        try {
+            parametros = [{
+                "operacion":'L',
+                "sub_operacion":'N',
+                "correo":request.body.correo,
+                "pass":request.body.pass,
                 "sp":"principal_productor"
             }]
             dbocategoria.getData(parametros).then(result => {
@@ -194,11 +239,12 @@ try {
         }
     })
 
-    router.route('/cuenta').get((request,res)=>{
+    router.route('/cuenta_pendiente').post((request,res)=>{
         try {
             parametros = [{
                 "operacion":'C',
                 "sub_operacion":'S',
+                "correo":request.body.correo,
                 "sp":"principal_productor"
             }]
             dbocategoria.getData(parametros).then(result => {
@@ -381,6 +427,27 @@ try {
             res.status(100).send("Revisa la estructura de la parametrización.");
         }
     })
+
+    router.route('/rechaza_cuenta').post((request,res)=>{
+        try {
+            console.log(request.body.id)
+            parametros = [{
+                "operacion":'C',
+                "sub_operacion":'R',
+                "id_generico":request.body.id_generico,
+                "sp":"principal_productor"
+            }]
+            dbocategoria.getData(parametros).then(result => {
+                if(result == 1){
+                    res.status(500).send("Revisa la parametrización enviada a la base de datos.");
+                }else{
+                    res.json(result);    
+                }
+            })
+        } catch (error) {
+            res.status(100).send("Revisa la estructura de la parametrización.");
+        }
+      })
     
 
 } catch (error) {
