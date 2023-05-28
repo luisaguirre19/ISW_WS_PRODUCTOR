@@ -161,6 +161,7 @@ try {
                 "color":request.body.color,
                 "placa":request.body.placa,
                 "correo":request.body.correo,
+                "url_img":request.body.url_img,
                 "sp":"principal_productor"
             }]
             dbocategoria.getData(parametros).then(result => {
