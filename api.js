@@ -177,11 +177,12 @@ try {
     })
 
     //BUSCAMOS TODOS LOS VEHICULOS REGISTRADOS PARA PODER TRANSPORTAR
-    router.route('/transporte').get((request,res)=>{
+    router.route('/get_transporte').post((request,res)=>{
         try {
             parametros = [{
                 "operacion":'T',
                 "sub_operacion":'S',
+                "correo":request.body.correo,
                 "sp":"principal_productor"
             }]
             dbocategoria.getData(parametros).then(result => {
@@ -283,11 +284,12 @@ try {
         }
     })
 
-    router.route('/cuenta_envio').get((request,res)=>{
+    router.route('/get_cuenta_envio').post((request,res)=>{
         try {
             parametros = [{
                 "operacion":'C',
                 "sub_operacion":'E',
+                "correo":request.body.correo,
                 "sp":"principal_productor"
             }]
             dbocategoria.getData(parametros).then(result => {
@@ -310,6 +312,7 @@ try {
                 "correo":request.body.correo,
                 "peso":request.body.peso,
                 "placa":request.body.placa,
+                "conductor":request.body.conductor,
                 "id_generico":request.body.id_generico,
                 "sp":"principal_productor"
             }]
@@ -365,11 +368,12 @@ try {
         }
     })
 
-    router.route('/conductor').get((request,res)=>{
+    router.route('/get_conductor').post((request,res)=>{
         try {
             parametros = [{
                 "operacion":'P',
                 "sub_operacion":'S',
+                "correo":request.body.correo,
                 "sp":"principal_productor"
             }]
             dbocategoria.getData(parametros).then(result => {
@@ -395,6 +399,7 @@ try {
                 "foto_perfil":request.body.foto_perfil,
                 "foto_licencia":request.body.foto_licencia,
                 "foto_dpi":request.body.foto_dpi,
+                "correo":request.body.correo,
                 "sp":"principal_productor"
             }]
             dbocategoria.getData(parametros).then(result => {
