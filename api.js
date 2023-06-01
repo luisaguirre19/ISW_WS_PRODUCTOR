@@ -454,6 +454,47 @@ try {
             res.status(100).send("Revisa la estructura de la parametrización.");
         }
       })
+
+    router.route('/get_qr').post((request,res)=>{
+    try {
+        parametros = [{
+            "operacion":'G',
+            "sub_operacion":'S',
+            "codigo_qr":request.body.codigo_qr,
+            "sp":"principal_productor"
+        }]
+        dbocategoria.getData(parametros).then(result => {
+            if(result == 1){
+                res.status(500).send("Revisa la parametrización enviada a la base de datos.");
+            }else{
+                res.json(result);    
+            }
+        })
+    } catch (error) {
+        res.status(100).send("Revisa la estructura de la parametrización.");
+    }
+    })
+
+    router.route('/actualiza_qr').post((request,res)=>{
+        try {
+            parametros = [{
+                "operacion":'G',
+                "sub_operacion":'U',
+                "codigo_qr":request.body.codigo_qr,
+                "sp":"principal_productor"
+            }]
+            dbocategoria.getData(parametros).then(result => {
+                if(result == 1){
+                    res.status(500).send("Revisa la parametrización enviada a la base de datos.");
+                }else{
+                    res.json(result);    
+                }
+            })
+        } catch (error) {
+            res.status(100).send("Revisa la estructura de la parametrización.");
+        }
+        })
+        
     
 
 } catch (error) {
