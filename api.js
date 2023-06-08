@@ -304,6 +304,26 @@ try {
         }
     })
 
+    router.route('/estado_cuenta').post((request,res)=>{
+        try {
+            parametros = [{
+                "operacion":'C',
+                "sub_operacion":'C',
+                "correo":request.body.correo,
+                "sp":"principal_productor"
+            }]
+            dbocategoria.getData(parametros).then(result => {
+                if(result == 1){
+                    res.status(500).send("Revisa la parametrización enviada a la base de datos.");
+                }else{
+                    res.json(result);    
+                }
+            })
+        } catch (error) {
+            res.status(100).send("Revisa la estructura de la parametrización.");
+        }
+    })
+
     router.route('/cuenta_envio').post((request,res)=>{
         try {
             parametros = [{
@@ -347,6 +367,68 @@ try {
             res.status(100).send("Revisa la estructura de la parametrización.");
         }
     })
+
+    router.route('/envios').post((request,res)=>{
+        try {
+            parametros = [{
+                "operacion":'E',
+                "sub_operacion":'U',
+                "codigo_qr":request.query.codigo_qr,
+                "estado":request.query.estado,
+                "sp":"principal_productor"
+            }]
+            dbocategoria.getData(parametros).then(result => {
+                if(result == 1){
+                    res.status(500).send("Revisa la parametrización enviada a la base de datos.");
+                }else{
+                    res.json(result);    
+                }
+            })
+        } catch (error) {
+            res.status(100).send("Revisa la estructura de la parametrización.");
+        }
+    })
+
+    router.route('/inserta_peso').post((request,res)=>{
+        try {
+            parametros = [{
+                "operacion":'M',
+                "sub_operacion":'I',
+                "codigo_qr":request.body.p_identificadorEnvio,
+                "peso":request.body.p_cantPeso,
+                "sp":"principal_productor"
+            }]
+            dbocategoria.getData(parametros).then(result => {
+                if(result == 1){
+                    res.status(500).send("Revisa la parametrización enviada a la base de datos.");
+                }else{
+                    res.json(result);    
+                }
+            })
+        } catch (error) {
+            res.status(100).send("Revisa la estructura de la parametrización.");
+        }
+      })
+
+      router.route('/valida_peso').post((request,res)=>{
+        try {
+            parametros = [{
+                "operacion":'M',
+                "sub_operacion":'S',
+                "codigo_qr":request.body.p_identificadorEnvio,
+                "sp":"principal_productor"
+            }]
+            dbocategoria.getData(parametros).then(result => {
+                if(result == 1){
+                    res.status(500).send("Revisa la parametrización enviada a la base de datos.");
+                }else{
+                    res.json(result);    
+                }
+            })
+        } catch (error) {
+            res.status(100).send("Revisa la estructura de la parametrización.");
+        }
+      })
 
     router.route('/envios_benef').get((request,res)=>{
         try {
