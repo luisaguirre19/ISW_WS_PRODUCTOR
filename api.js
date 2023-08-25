@@ -107,21 +107,61 @@ try {
     })
 
     router.route('/login').post((request,res)=>{
-        try {
+        let parametros = request.body;
             parametros = [{
-                "operacion":'L',
-                "sub_operacion":'U',
-                "correo":request.body.correo,
-                "sp":"principal_productor"
-            }]
-            dbocategoria.getData(parametros).then(result => {
-                            res.json(result);    
-            })
-     
+            operacion: "I",
+            sub_operacion: "U",
+            correo: request.body.correo,
+            nombres: request.body.nombres,
+            apellidos: request.body.apellidos,
+            telefono: request.body.telefono,
+            tipo: request.body.tipo,
+            url_image: request.body.url_image,
+            sp: "principal",
+        }]
+
+        try {
+
+            db.getData(parametros).then((result) => {
+                if (result == 1) {
+                res
+                    .status(500)
+                    .send("Revisa la parametrización enviada a la base de datos.");
+                } else {
+                res.json(result);
+                }
+            });
+            } catch (error) {
+            res.status(100).send("Revisa la estructura de la parametrización.");
+            }
+        });
+
+    router.route("/buscar_login").post((request, res) => {
+        // res.send('Hola Quirovery')
+    
+        let parametros = request.body;
+        parametros = [{
+            operacion: "S",
+            sub_operacion: "L",
+            correo: request.body.correo,
+            sp: "principal",
+        }]
+    
+        try {
+    
+            db.getData(parametros).then((result) => {
+            if (result == 1) {
+                res
+                .status(500)
+                .send("Revisa la parametrización enviada a la base de datos.");
+            } else {
+                res.json(result);
+            }
+            });
         } catch (error) {
             res.status(100).send("Revisa la estructura de la parametrización.");
         }
-    })
+        });
 
     router.route('/incripcion').post((request,res)=>{
         try {
