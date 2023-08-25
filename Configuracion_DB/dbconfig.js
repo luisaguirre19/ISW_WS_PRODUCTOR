@@ -13,7 +13,7 @@
 const config = {
     user : 'sa',
     password: 'Guatemala01*',
-    server: '185.137.122.106:1433',
+    server: '185.137.122.106',
     database: 'quirovery',
     options:{
         trustedconnection: false,
