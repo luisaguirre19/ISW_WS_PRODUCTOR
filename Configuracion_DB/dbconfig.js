@@ -18,7 +18,7 @@ const config = {
     options:{
         trustedconnection: false,
         enableArithAbort: true,
-        encrypt:true
+        encrypt:false
     }
 }
 
